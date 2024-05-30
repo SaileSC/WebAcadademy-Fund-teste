@@ -89,7 +89,7 @@ describe("calcula o preco total dos produtos de uma lista => calculateTotalPrice
       { name: "Feijao", price: 15, quantity: 2 },
       { name: "Banana kg", price: 5, quantity: 2 },
     ];
-    expect(calculateTotalPrice(listaProdutos)).toBe(40);
+    expect(calculateTotalPrice(listaProdutos)).toBe(75);
   });
 
   test("o valor do carrinho com 2 intens", () => {

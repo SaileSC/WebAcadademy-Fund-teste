@@ -5,7 +5,8 @@
  * @returns {string} - The first name extracted from the full name, or the name itself if no blank space is found.
  */
 function firstName(fullName) {
-  const blankSpace = fullName.lastIndexOf(' ');
+  fullName = fullName.trim();
+  const blankSpace = fullName.indexOf(" ");
 
   if (blankSpace === -1) return fullName;
   else return fullName.slice(0, blankSpace);
@@ -28,9 +29,9 @@ function verifyStockAvailability(productType, qty) {
     book: 0,
   };
 
-  const availableStock = stock[productType];
-  if (availableStock === 0) return false;
-  else return true;
+  if (!stock[productType]) return false;
+
+  return stock[productType] >= qty ? true : false;
 }
 
 /**
@@ -49,9 +50,11 @@ function verifyStockAvailability(productType, qty) {
  */
 function calculateTotalPrice(products) {
   let total = 0;
+
   for (let i = 0; i < products.length; i++) {
-    total = products[i].price;
+    total += products[i].price * products[i].quantity;
   }
+
   return total;
 }
 
