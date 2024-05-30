@@ -1,5 +1,6 @@
 const validations = require("../utils/validations");
 
+//Testes funcao que pega primeiro nome
 describe("Pegar primeiro nome => firstname(fullName)", () => {
   const firstName = validations.firstName;
   test("Usuario passa apenas o primeiro nome", () => {
@@ -19,31 +20,65 @@ describe("Pegar primeiro nome => firstname(fullName)", () => {
     const nome = "           Juvenal Silva de Linhais";
     expect(firstName(nome)).toEqual("Juvenal");
   });
+
+  test("Usuario passa o nome com espacos demasiados entre os nomes", () => {
+    const nome = "Juvenal   Silva   de     Linhais";
+    expect(firstName(nome)).toEqual("Juvenal");
+  });
+
   test("Usuario passa o nome com espacos no fim", () => {
     const nome = "Juvenal Silva de Linhais           ";
     expect(firstName(nome)).toEqual("Juvenal");
   });
 });
 
-describe("verifica se há itens disponiveis no estoque => verifyStockAvailability(productType, qty)", () => {
+//Testes funcao para avaliar quantidade de itens do stock
+describe("valida se há quantidade do item no stock => verifyStockAvailability(productType, qty)", () => {
   const verifyStockAvailability = validations.verifyStockAvailability;
-  test("verifica quantidade de notebocks", () => {
-    expect(verifyStockAvailability("notebook", 10)).toBe(true);
+  // Dados na funcao
+  // const stock = {
+  //   laptop: 10,
+  //   smartphone: 20,
+  //   headphone: 5,
+  //   tablet: 15,
+  //   book: 0,
+  // };
+  describe("validacoes para objeto existente (para este caso usaremos o", () => {
+    describe("validacoes para item laptop", () => {
+      test("quando o valor é o que tem no stock", () => {
+        expect(verifyStockAvailability("laptop", 10)).toEqual(true);
+      });
+      test("quando o valor é o maior do que há no stock", () => {
+        expect(verifyStockAvailability("laptop", 15)).toEqual(false);
+      });
+      test("quando o valor é o menor do que há no stock", () => {
+        expect(verifyStockAvailability("laptop", 5)).toEqual(true);
+      });
+    });
+
+    describe("validacoes para item headphone", () => {
+      test("quando o valor é o que tem no stock", () => {
+        expect(verifyStockAvailability("headphone", 5)).toEqual(true);
+      });
+      test("quando o valor é o maior do que há no stock", () => {
+        expect(verifyStockAvailability("headphone", 10)).toEqual(false);
+      });
+      test("quando o valor é o menor do que há no stock", () => {
+        expect(verifyStockAvailability("headphone", 3)).toEqual(true);
+      });
+    });
   });
-  test("verifica quantidade de smartphone", () => {
-    expect(verifyStockAvailability("smartphone", 20)).toBe(true);
-  });
-  test("verifica quantidade de headphone", () => {
-    expect(verifyStockAvailability("headphone", 4)).toBe(true);
-  });
-  test("verifica quantidade de tablet", () => {
-    expect(verifyStockAvailability("tablet", 15)).toBe(true);
-  });
-  test("verifica quantidade de book", () => {
-    expect(verifyStockAvailability("book", 0)).toBe(true);
+
+  describe("validacao para quanto item nao exitir no stock", () => {
+    test("quando o item não existe no stock", () => {
+      expect(verifyStockAvailability("ficticio", 5)).toEqual(false);
+      expect(verifyStockAvailability("ficticio", 5)).toEqual(false);
+      expect(verifyStockAvailability("ficticio", 0)).toEqual(false);
+    });
   });
 });
 
+//Testes funcao para avaliar o valor toral de uma lista de produtos
 describe("calcula o preco total dos produtos de uma lista => calculateTotalPrice(products)", () => {
   const calculateTotalPrice = validations.calculateTotalPrice;
 
